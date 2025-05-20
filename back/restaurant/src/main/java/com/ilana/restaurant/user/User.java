@@ -1,4 +1,4 @@
-package com.example.restaurant.user;
+package com.ilana.restaurant.user;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Entity;

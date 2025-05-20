@@ -1,17 +1,15 @@
-package com.example.restaurant.restaurants;
+package com.ilana.restaurant.restaurants;
 
 import java.util.List;
 
-import com.example.restaurant.menuItem.MenuItem;
+import com.ilana.restaurant.menuItem.MenuItem;
 
 import jakarta.annotation.Nonnull;
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 
 @Entity
@@ -19,14 +17,17 @@ public class Restaurants {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Column(name = "id")
 	private Integer id;
 	@Nonnull
 	private String restaurant_name;
 	@Nonnull
 	private String city;
 	private String type;
+	private String coverPath;
+	@OneToMany(mappedBy = "restaurant")
+	private List<MenuItem> menu;
 
-	
 	
 	public Integer getId() {
 		return id;
@@ -53,8 +54,18 @@ public class Restaurants {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-
+	public String getCoverPath() {
+		return coverPath;
+	}
+	public void setCoverPath(String coverPath) {
+		this.coverPath = coverPath;
+	}
+	public List<MenuItem> getMenu() {
+		return menu;
+	}
+	public void setMenu(List<MenuItem> menu) {
+		this.menu = menu;
+	}
 	
 	
 

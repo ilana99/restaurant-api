@@ -1,10 +1,14 @@
-package com.example.restaurant.restaurants;
+package com.ilana.restaurant.restaurants;
+
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RestaurantsDTO {
 
 	@Nonnull
@@ -14,6 +18,7 @@ public class RestaurantsDTO {
 	@Nonnull
 	private String city;
 	private String type;
+	private String coverPath;
 	
 	public RestaurantsDTO() {
 	}
@@ -42,6 +47,14 @@ public class RestaurantsDTO {
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getCoverPath() {
+		return coverPath;
+	}
+
+	public void setCoverPath(String coverPath) {
+		this.coverPath = coverPath;
 	}
 	
 	
