@@ -1,4 +1,4 @@
-package com.ilana.restaurant.menuItem;
+package com.ilana.restaurant.menu;
 
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class MenuItemController {
 	private RestaurantsRepository restaurantsRepository;
 	
 	@GetMapping(path="/FindByRestaurantId/")
-	public ResponseEntity<MenuDTO> getMenu(@RequestParam Integer restaurantId)  {
+	public ResponseEntity<ApiResponse<MenuDTO>> getMenu(@RequestParam Integer restaurantId)  {
 	
 		Optional<Restaurants> optionalRestaurant = restaurantsRepository.findById(restaurantId);
 		Restaurants restaurant = optionalRestaurant.orElseThrow(() -> 
@@ -65,18 +65,15 @@ public class MenuItemController {
 		
 		MenuDTO menuDTO = new MenuDTO();
 		menuDTO.setMenu(ListmenuItemDTO);
+		menuDTO.setRestaurantId(restaurant.getId());
 		
-		RestaurantsDTO restaurantDTO = new RestaurantsDTO();
-		restaurantDTO.setId(restaurant.getId());	
-		menuDTO.setRestaurant(restaurantDTO);
-		
-		return ResponseEntity.ok(menuDTO); 
+		return ResponseEntity.ok(new ApiResponse<>(menuDTO));
 	
 		
 	}
 
 	@PostMapping(path = "/add/")
-	public ResponseEntity<MenuItemDTO> addItem(@RequestBody MenuItem menuItem,
+	public ResponseEntity<ApiResponse<MenuItemDTO>> addItem(@RequestBody MenuItem menuItem,
 			@RequestParam Integer restaurantId) {
 		Optional<Restaurants> optionalRestaurant = restaurantsRepository.findById(restaurantId);
 		Restaurants restaurant = optionalRestaurant.orElseThrow(() -> 
@@ -102,7 +99,7 @@ public class MenuItemController {
 		dto.setItem(n.getItem());
 		dto.setImagePath(n.getImagePath());
 		
-		return ResponseEntity.ok(dto); 
+		return ResponseEntity.ok(new ApiResponse<>(dto)); 
 		
 	}
 

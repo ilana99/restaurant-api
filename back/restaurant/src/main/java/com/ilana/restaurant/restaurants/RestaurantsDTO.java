@@ -8,7 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
 public class RestaurantsDTO {
 
 	@Nonnull
@@ -20,9 +20,7 @@ public class RestaurantsDTO {
 	private String type;
 	private String coverPath;
 	
-	public RestaurantsDTO() {
-	}
-		
+
 	public Integer getId() {
 		return id;
 	}

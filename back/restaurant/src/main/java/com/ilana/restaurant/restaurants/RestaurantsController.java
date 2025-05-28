@@ -1,9 +1,6 @@
 package com.ilana.restaurant.restaurants;
 
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Collections;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -12,7 +9,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -21,12 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ilana.restaurant.menuItem.MenuItem;
+import com.ilana.restaurant.config.ApiResponse;
 import com.ilana.restaurant.service.Patcher;
-
 
 @RestController
 @RequestMapping(path = "/restaurants")
@@ -36,47 +30,105 @@ public class RestaurantsController {
 	private RestaurantsRepository restaurantsRepository;
 	@Autowired
 	private Patcher patcher;
-	
+
 	@GetMapping(path = "/all")
-	public List<RestaurantsDTO> getAllRestaurants() {
-		Iterable<Restaurants> allRestaurants = restaurantsRepository.findAll();
-		List<RestaurantsDTO> restaurantDTOs = new ArrayList<>();
-		
-		for (Restaurants restaurant : allRestaurants) {
+	public ResponseEntity<ApiResponse<List<RestaurantsDTO>>> getAllRestaurants() {
+
+		List<Restaurants> allRestaurants = restaurantsRepository.findAll();
+
+		List<RestaurantsDTO> restaurantDTOs = allRestaurants.stream().map(restaurant -> {
 			RestaurantsDTO dto = new RestaurantsDTO();
-		    dto.setId(restaurant.getId());
-		    dto.setRestaurant_name(restaurant.getRestaurant_name());
-		    dto.setCity(restaurant.getCity());
-		    dto.setType(restaurant.getType());
-		    dto.setCoverPath(restaurant.getCoverPath());
-		    restaurantDTOs.add(dto);
-		}
-		
-		return restaurantDTOs;
-		
+			dto.setId(restaurant.getId());
+			dto.setRestaurant_name(restaurant.getRestaurant_name());
+			dto.setCity(restaurant.getCity());
+			dto.setType(restaurant.getType());
+			dto.setCoverPath(restaurant.getCoverPath());
+			return dto;
+		}).collect(Collectors.toList());
+
+		return ResponseEntity.ok(new ApiResponse<>(restaurantDTOs));
 	}
 
 	@GetMapping(path = "/findbyid/{id}")
-	public  Optional<Restaurants> findById(@PathVariable Integer id) {
-		return restaurantsRepository.findById(id);
+	public ResponseEntity<ApiResponse<RestaurantsDTO>> findById(@PathVariable Integer id) {
+		Optional<Restaurants> optionalRestaurant = restaurantsRepository.findById(id);
+		Restaurants restaurant = optionalRestaurant
+				.orElseThrow(() -> new RuntimeException("no restaurant with id:" + id));
+
+		RestaurantsDTO dto = new RestaurantsDTO();
+		dto.setCity(restaurant.getCity());
+		dto.setCoverPath(restaurant.getCoverPath());
+		dto.setId(restaurant.getId());
+		dto.setRestaurant_name(restaurant.getRestaurant_name());
+		dto.setType(restaurant.getType());
+
+		return ResponseEntity.ok(new ApiResponse<>(dto));
+
 	}
 
 	@GetMapping(path = "/findbycity/")
-	public  List<Restaurants> findByCity(@RequestParam String city) {
-		return restaurantsRepository.findByCity(city);
+	public ResponseEntity<ApiResponse<List<RestaurantsDTO>>> findByCity(@RequestParam String city) {
+		List<Restaurants> allRestaurants = restaurantsRepository.findByCity(city);
+		if (allRestaurants.isEmpty()) {
+			throw new RuntimeException("no match found");
+		}
+
+		List<RestaurantsDTO> restaurantDTOs = allRestaurants.stream().map(restaurant -> {
+			RestaurantsDTO dto = new RestaurantsDTO();
+			dto.setId(restaurant.getId());
+			dto.setRestaurant_name(restaurant.getRestaurant_name());
+			dto.setCity(restaurant.getCity());
+			dto.setType(restaurant.getType());
+			dto.setCoverPath(restaurant.getCoverPath());
+			return dto;
+		}).collect(Collectors.toList());
+
+		return ResponseEntity.ok(new ApiResponse<>(restaurantDTOs));
+
 	}
-	
+
 	@GetMapping(path = "/findbytype/")
-	public  List<Restaurants> findByType(@RequestParam String type) {
-		return restaurantsRepository.findByType(type);
+	public ResponseEntity<ApiResponse<List<RestaurantsDTO>>> findByType(@RequestParam String type) {
+		List<Restaurants> allRestaurants = restaurantsRepository.findByType(type);
+		if (allRestaurants.isEmpty()) {
+			throw new RuntimeException("no match found");
+		}
+
+		List<RestaurantsDTO> restaurantDTOs = allRestaurants.stream().map(restaurant -> {
+			RestaurantsDTO dto = new RestaurantsDTO();
+			dto.setId(restaurant.getId());
+			dto.setRestaurant_name(restaurant.getRestaurant_name());
+			dto.setCity(restaurant.getCity());
+			dto.setType(restaurant.getType());
+			dto.setCoverPath(restaurant.getCoverPath());
+			return dto;
+		}).collect(Collectors.toList());
+
+		return ResponseEntity.ok(new ApiResponse<>(restaurantDTOs));
+
 	}
 
 	@GetMapping(path = "/findbycityandtype/")
-	public  Optional<Restaurants> findByCityAndType(@RequestParam String city, @RequestParam String type) {
-		return restaurantsRepository.findByCityAndType(city, type);
+	public ResponseEntity<ApiResponse<List<RestaurantsDTO>>> findByCityAndType(@RequestParam String city,
+			@RequestParam String type) {
+		List<Restaurants> allRestaurants = restaurantsRepository.findByCityAndType(city, type);
+		if (allRestaurants.isEmpty()) {
+			throw new RuntimeException("no match found");
+		}
+
+		List<RestaurantsDTO> restaurantDTOs = allRestaurants.stream().map(restaurant -> {
+			RestaurantsDTO dto = new RestaurantsDTO();
+			dto.setId(restaurant.getId());
+			dto.setRestaurant_name(restaurant.getRestaurant_name());
+			dto.setCity(restaurant.getCity());
+			dto.setType(restaurant.getType());
+			dto.setCoverPath(restaurant.getCoverPath());
+			return dto;
+		}).collect(Collectors.toList());
+
+		return ResponseEntity.ok(new ApiResponse<>(restaurantDTOs));
+
 	}
-
-
 
 	@PostMapping(path = "/add")
 	public ResponseEntity<Restaurants> addRestaurant(@RequestBody RestaurantsDTO restaurantsDTO) {
@@ -95,34 +147,34 @@ public class RestaurantsController {
 
 		return new ResponseEntity<Restaurants>(addedRestaurant, HttpStatus.CREATED);
 	}
-	
-	@PatchMapping(path="/modify/{id}")
-	public  ResponseEntity<Restaurants> modifyRestaurant(@RequestBody Map<String, Object> updates, @PathVariable Integer id) {
-		Optional<Restaurants> restaurantOptional = restaurantsRepository.findById(id);
-		
-		if (restaurantOptional.isPresent()) {
-			Restaurants restaurant = restaurantOptional.get();
-			patcher.patchRequest(restaurant, id, updates);
-			restaurantsRepository.save(restaurant);
-			return new ResponseEntity<>(restaurant, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
-	
-	@DeleteMapping(path="/delete/{id}")
-	public  ResponseEntity<String> deleteRestaurant(@PathVariable Integer id) {
-		Optional<Restaurants> restaurantOptional = restaurantsRepository.findById(id);
-		if (restaurantOptional.isPresent()) {
-			Restaurants restaurant = restaurantOptional.get();
-			restaurantsRepository.delete(restaurant);
-			return new ResponseEntity<>("deleted", HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>("not found", HttpStatus.OK);
-		}
-	}
-	 
 
+	@PatchMapping(path = "/modify/{id}")
+	public ResponseEntity<RestaurantsDTO> modifyRestaurant(@RequestBody Map<String, Object> updates,
+			@PathVariable Integer id) {
+		Optional<Restaurants> optionalRestaurant = restaurantsRepository.findById(id);
+		Restaurants restaurant = optionalRestaurant
+				.orElseThrow(() -> new RuntimeException("no restaurant with id:" + id));
+
+		patcher.patchRequest(restaurant, id, updates);
+		restaurantsRepository.save(restaurant);
+		
+		RestaurantsDTO dto = new RestaurantsDTO();
+		dto.setId(restaurant.getId());
+		dto.setRestaurant_name(restaurant.getRestaurant_name());
+		dto.setCity(restaurant.getCity());
+		dto.setType(restaurant.getType());
+		dto.setCoverPath(restaurant.getCoverPath());
+		return new ResponseEntity<>(dto, HttpStatus.OK);
+
+	}
+
+	@DeleteMapping(path = "/delete/{id}")
+	public ResponseEntity<String> deleteRestaurant(@PathVariable Integer id) {
+		Optional<Restaurants> restaurantOptional = restaurantsRepository.findById(id);
+		Restaurants restaurant = restaurantOptional.orElseThrow(() -> new RuntimeException("no restaurant with id:" + id));
+	
+		restaurantsRepository.delete(restaurant);
+		return new ResponseEntity<>("Restaurant deleted", HttpStatus.OK);
+	}
 
 }

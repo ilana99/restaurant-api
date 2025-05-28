@@ -13,6 +13,8 @@ public interface RestaurantsRepository extends CrudRepository<Restaurants, Integ
 	
 	List<Restaurants> findByType(String type);
 	
-	Optional<Restaurants> findByCityAndType(String city, String type);
+	List<Restaurants> findByCityAndType(String city, String type);
+	
+	List<Restaurants> findAll();
 	
 }

@@ -2,7 +2,7 @@ package com.ilana.restaurant.restaurants;
 
 import java.util.List;
 
-import com.ilana.restaurant.menuItem.MenuItem;
+import com.ilana.restaurant.menu.MenuItem;
 
 import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;

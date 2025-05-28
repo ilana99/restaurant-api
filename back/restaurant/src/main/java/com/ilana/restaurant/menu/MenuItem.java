@@ -1,4 +1,4 @@
-package com.ilana.restaurant.menuItem;
+package com.ilana.restaurant.menu;
 
 
 import com.ilana.restaurant.restaurants.Restaurants;

@@ -1,4 +1,4 @@
-package com.ilana.restaurant.menuItem;
+package com.ilana.restaurant.menu;
 
 import java.util.List;
 
@@ -6,14 +6,14 @@ import com.ilana.restaurant.restaurants.Restaurants;
 import com.ilana.restaurant.restaurants.RestaurantsDTO;
 
 public class MenuDTO {
-	private RestaurantsDTO restaurant;
+	private Integer restaurantId;
 	private List<MenuItemDTO> menu;
 	
-	public RestaurantsDTO getRestaurant() {
-		return restaurant;
+	public Integer getRestaurantId() {
+		return restaurantId;
 	}
-	public void setRestaurant(RestaurantsDTO restaurant) {
-		this.restaurant = restaurant;
+	public void setRestaurantId(Integer restaurantId) {
+		this.restaurantId = restaurantId;
 	}
 	public List<MenuItemDTO> getMenu() {
 		return menu;

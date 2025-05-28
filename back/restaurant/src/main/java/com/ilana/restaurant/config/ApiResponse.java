@@ -7,6 +7,9 @@ public class ApiResponse<T> {
 	private T data;
 	private String message;
 	
+	public ApiResponse(T data) {
+		this.data = data;
+	}
 	
 	public ApiResponse(String message) {
 		this.message = message;
