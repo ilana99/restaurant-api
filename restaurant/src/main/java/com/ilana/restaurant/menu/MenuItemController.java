@@ -72,7 +72,7 @@ public class MenuItemController {
 		
 	}
 
-	@PostMapping(path = "/add/")
+	@PostMapping
 	public ResponseEntity<ApiResponse<MenuItemDTO>> addItem(@RequestBody MenuItem menuItem,
 			@RequestParam Integer restaurantId) {
 		Optional<Restaurants> optionalRestaurant = restaurantsRepository.findById(restaurantId);
@@ -105,7 +105,7 @@ public class MenuItemController {
 
 	
 	
-	@DeleteMapping(path="/delete/")
+	@DeleteMapping
 	public ResponseEntity<ApiResponse<String>> deleteItem(@RequestParam Integer restaurantId, @RequestParam Integer itemId) {
 
 		Optional<Restaurants> optionalRestaurant = restaurantsRepository.findById(restaurantId);
@@ -128,7 +128,7 @@ public class MenuItemController {
 		
 	}
 	
-	@PatchMapping(path="/modify/") 
+	@PatchMapping
 	public ResponseEntity<MenuItemDTO> modifyItem(@RequestBody Map<String, Object> updates, @RequestParam Integer restaurantId, @RequestParam Integer itemId) {
 
 		

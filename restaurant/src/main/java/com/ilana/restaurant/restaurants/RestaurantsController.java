@@ -31,7 +31,7 @@ public class RestaurantsController {
 	@Autowired
 	private Patcher patcher;
 
-	@GetMapping(path = "/all")
+	@GetMapping
 	public ResponseEntity<ApiResponse<List<RestaurantsDTO>>> getAllRestaurants() {
 
 		List<Restaurants> allRestaurants = restaurantsRepository.findAll();
@@ -49,7 +49,7 @@ public class RestaurantsController {
 		return ResponseEntity.ok(new ApiResponse<>(restaurantDTOs));
 	}
 
-	@GetMapping(path = "/findbyid/{id}")
+	@GetMapping(path = "/{id}")
 	public ResponseEntity<ApiResponse<RestaurantsDTO>> findById(@PathVariable Integer id) {
 		Optional<Restaurants> optionalRestaurant = restaurantsRepository.findById(id);
 		Restaurants restaurant = optionalRestaurant
@@ -130,7 +130,7 @@ public class RestaurantsController {
 
 	}
 
-	@PostMapping(path = "/add")
+	@PostMapping
 	public ResponseEntity<Restaurants> addRestaurant(@RequestBody RestaurantsDTO restaurantsDTO) {
 		String name = restaurantsDTO.getRestaurant_name();
 		String city = restaurantsDTO.getCity();
@@ -148,7 +148,7 @@ public class RestaurantsController {
 		return new ResponseEntity<Restaurants>(addedRestaurant, HttpStatus.CREATED);
 	}
 
-	@PatchMapping(path = "/modify/{id}")
+	@PatchMapping(path = "/{id}")
 	public ResponseEntity<RestaurantsDTO> modifyRestaurant(@RequestBody Map<String, Object> updates,
 			@PathVariable Integer id) {
 		Optional<Restaurants> optionalRestaurant = restaurantsRepository.findById(id);
@@ -168,7 +168,7 @@ public class RestaurantsController {
 
 	}
 
-	@DeleteMapping(path = "/delete/{id}")
+	@DeleteMapping(path = "/{id}")
 	public ResponseEntity<String> deleteRestaurant(@PathVariable Integer id) {
 		Optional<Restaurants> restaurantOptional = restaurantsRepository.findById(id);
 		Restaurants restaurant = restaurantOptional.orElseThrow(() -> new RuntimeException("no restaurant with id:" + id));
