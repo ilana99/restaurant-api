@@ -12,13 +12,13 @@ GET "/restaurants"
 GET "/restaurants/{id}"
 
 #### Find Restaurants By City
-GET "/restaurants/findbycity/{city}"
+GET "/restaurants/findbycity/?city=name"
 
 #### Find Restaurants By Type
-GET "/restaurants/findbytype/{type}"
+GET "/restaurants/findbytype/?type=name"
 
 #### Find Restaurants By City and Type
-GET "/restaurants/findbycityandtype/{city}{type}"
+GET "/restaurants/findbycityandtype/?city=name&type=name"
 
 #### Add restaurant
 POST "/restaurants"
@@ -34,10 +34,10 @@ DELETE "/restaurants/{id}"
 GET "/menu/{restaurantId}"
 
 #### Add Menu Item
-POST "/menu/{restaurantId}"
+POST "/menu/?restaurantId=id"
 
 #### Delete Menu Item
-DELETE "/menu/{restaurantId}"
+DELETE "/menu/?restaurantId=id?ItemId=id"
 
 #### Modify Menu Item
-PATCH "/menu/{restaurantId}{itemId}"
+PATCH "/menu/?restaurantId=id?ItemId=id"
