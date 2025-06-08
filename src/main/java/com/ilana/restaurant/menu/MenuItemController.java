@@ -41,8 +41,8 @@ public class MenuItemController {
 	@Autowired
 	private RestaurantsRepository restaurantsRepository;
 	
-	@GetMapping(path="/FindByRestaurantId/")
-	public ResponseEntity<ApiResponse<MenuDTO>> getMenu(@RequestParam Integer restaurantId)  {
+	@GetMapping(path="/{id}")
+	public ResponseEntity<ApiResponse<MenuDTO>> getMenu(@PathVariable Integer restaurantId)  {
 	
 		Optional<Restaurants> optionalRestaurant = restaurantsRepository.findById(restaurantId);
 		Restaurants restaurant = optionalRestaurant.orElseThrow(() -> 
