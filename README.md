@@ -37,7 +37,7 @@ GET "/menu/{restaurantId}"
 POST "/menu/?restaurantId=id"
 
 #### Delete Menu Item
-DELETE "/menu/?restaurantId=id?ItemId=id"
+DELETE "/menu/?restaurantId=id&ItemId=id"
 
 #### Modify Menu Item
-PATCH "/menu/?restaurantId=id?ItemId=id"
+PATCH "/menu/?restaurantId=id&ItemId=id"
